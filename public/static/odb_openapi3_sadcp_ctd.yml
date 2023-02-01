@@ -1,0 +1,282 @@
+openapi: 3.0.1
+info:
+  title: ODB Open API
+  description: >-
+    ## **APIGATE** Manual
+
+    * This swagger-UI is just for trials of ODB open API.
+
+    * Specify smaller longitude/latitude/depth range can get faster response.
+
+    * Directly using these APIs by HTTP GET method (shown as the block of
+    Request URL) can be even much faster.
+
+    * Note that *this UI may get stuck if too much data being queryed.*
+  version: 1.0.0
+servers:
+  - url: https://ecodata.odb.ntu.edu.tw/
+paths:
+  /api/sadcp:
+    get:
+      tags:
+        - SADCP
+      description: ODB SADCP API
+      parameters:
+        - name: lon0
+          in: query
+          schema:
+            type: number
+        - name: lon1
+          in: query
+          schema:
+            type: number
+        - name: lat0
+          in: query
+          schema:
+            type: number
+        - name: lat1
+          in: query
+          schema:
+            type: number
+        - name: dep0
+          in: query
+          schema:
+            type: number
+        - name: dep1
+          in: query
+          schema:
+            type: number
+        - name: dep_mode
+          in: query
+          schema:
+            type: string
+        - name: mode
+          in: query
+          schema:
+            type: string
+        - name: format
+          in: query
+          schema:
+            type: string
+        - name: xorder
+          in: query
+          schema:
+            type: integer
+        - name: yorder
+          in: query
+          schema:
+            type: integer
+        - name: start
+          in: query
+          schema:
+            type: string
+        - name: end
+          in: query
+          schema:
+            type: string
+        - name: limit
+          in: query
+          schema:
+            type: integer
+        - name: mean_threshold
+          in: query
+          schema:
+            type: string
+        - name: append
+          in: query
+          description: 'Output multi-variables by comma-separated string: "u,v,count"'
+          schema:
+            type: string
+            default: u,v
+      responses:
+        '200':
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/ctd:
+    get:
+      tags:
+        - CTD
+      description: ODB CTD API
+      parameters:
+        - name: lon0
+          in: query
+          schema:
+            type: number
+        - name: lon1
+          in: query
+          schema:
+            type: number
+        - name: lat0
+          in: query
+          schema:
+            type: number
+        - name: lat1
+          in: query
+          schema:
+            type: number
+        - name: dep0
+          in: query
+          schema:
+            type: number
+        - name: dep1
+          in: query
+          schema:
+            type: number
+        - name: dep_mode
+          in: query
+          schema:
+            type: string
+        - name: mode
+          in: query
+          schema:
+            type: string
+        - name: format
+          in: query
+          schema:
+            type: string
+        - name: xorder
+          in: query
+          schema:
+            type: integer
+        - name: yorder
+          in: query
+          schema:
+            type: integer
+        - name: start
+          in: query
+          schema:
+            type: string
+        - name: end
+          in: query
+          schema:
+            type: string
+        - name: limit
+          in: query
+          schema:
+            type: integer
+        - name: mean_threshold
+          in: query
+          schema:
+            type: string
+        - name: append
+          in: query
+          description: >-
+            Output multi-variables by comma-separated string:
+            "temperature,salinity,fluorescence,transmission,oxygen,count"
+          schema:
+            type: string
+            default: temperature
+      responses:
+        '200':
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+  /bio/occurrence/{name}:
+    get:
+      tags:
+        - Occurrence
+      description: Occurrence records of species in ODB Bio-database
+      parameters:
+        - name: grid
+          in: query
+          description: '0 (default), 1, 2, 3: gridded in 0.25, 0.5, 1, 2 degree (optional)'
+          schema:
+            type: integer
+        - name: name
+          in: path
+          description: Scientific name (binomial)
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Occurrence ok (in JSON)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      occurrence:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            decimalLongitude:
+                              type: number
+                            decimalLatitude:
+                              type: number
+                            scientificName:
+                              type: string
+                            taxonRank:
+                              type: string
+                            minimumDepthInMeters:
+                              type: number
+                            measurementType:
+                              type: string
+                            measurementValue:
+                              type: integer
+                            measurementUnit:
+                              type: string
+                            eventDate:
+                              type: string
+                            occurrenceID:
+                              type: string
+                            bibliographicCitation:
+                              type: string
+                description: Occurrence ok (in JSON)
+  /bio/taxonomy/{name}:
+    get:
+      tags:
+        - Taxonomy
+      description: Taxonomy of species in ODB Bio-database
+      parameters:
+        - name: name
+          in: path
+          description: Scientific name (binomial)
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Taxonomy ok (in JSON)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      taxonomy:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            scientificName:
+                              type: string
+                            taxonRank:
+                              type: string
+                            kingdom:
+                              type: string
+                            phylum:
+                              type: string
+                            class:
+                              type: string
+                            order:
+                              type: string
+                            family:
+                              type: string
+                            genus:
+                              type: string
+                            specificEpithet:
+                              type: string
+                description: Taxonomy ok (in JSON)
+components: {}

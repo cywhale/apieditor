@@ -1,0 +1,77 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+**/node_modules
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+
+# production
+**/build
+**/dist
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Cypress
+test/cypress/screenshots
+test/cypress/videos
+test/cypress/downloads
+
+# idea
+*.iml
+.idea
+
+/swagger-api-swagger-editor*.tgz
+
+.yarn/*
+**/node_modules
+**/exports
+**/bak
+**/*.swp
+**/.cd.swp
+**/__pycache__
+**/.vscode
+**/.ipynb_checkpoints
+*.mat
+*.csv
+*.log
+**/access_log*
+**/test_log
+**/bak_log
+**/bak_ver
+**/ssr-build/
+**/ver_bak
+**/coverage
+**/temp
+**/tmp
+**/tmp.*
+**/*.grib
+**/*.save
+**/*.bak
+**/*~
+**/.DS_Store
+**/.credentials.*
+**/.eslintrc.*
+**/*.pem
+**/*.key
+**/*.cert
+**/.env
+**/.cache
+**/.*.login.*
+**/.setting.*
+**/size-plugin.json
+**/.testenv.js
+**/.ssologin.js
+**/.yarnrc
+**/.npmrc

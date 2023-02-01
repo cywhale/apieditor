@@ -1,0 +1,69 @@
+# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: SwaggerEditor@next build
+
+on:
+  push:
+    branches: [ next ]
+  pull_request:
+    branches: [ next ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - name: Use Node.js 16
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.16
+          registry-url: https://npm.pkg.github.com/
+          scope: "@swagger-api"
+
+      - name: Cache npm cache files
+        id: cache-npm-cache-files
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: npm-cache-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+      - name: Cache Cypress binary
+        id: cache-cypress-binary
+        uses: actions/cache@v3
+        with:
+          path: cypress/cache
+          key: cypress-binary-${{ hashFiles('package-lock.json') }}
+
+      - name: Install dependencies
+        run: npm ci
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Lint commit message
+        if: github.ref != 'refs/heads/next' && github.actor != 'dependabot[bot]'
+        run: git log -1 --pretty=format:"%s" | npx commitlint
+
+      - name: Lint code
+        run: npm run lint
+
+      - name: Unit tests
+        run: npm test
+        env:
+          CI: true
+
+      - name: Build App artifacts
+        run: npm run build:app
+
+      - name: E2E Tests
+        run: npm run cy:ci
+
+      - name: Upload build artifacts
+        if: github.ref == 'refs/heads/next'
+        uses: actions/upload-artifact@v3
+        with:
+          name: build
+          path: ./build
