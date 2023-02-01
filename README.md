@@ -1,5 +1,5 @@
 # apieditor
-clone from [swagger-api/swagger-editor](https://github.com/swagger-api/swagger-editor) with some trials/modifications
+clone from [swagger-api/swagger-editor](https://github.com/swagger-api/swagger-editor), using @next branch, with some trials/modifications
 
 #### Client
 npm run build:app
@@ -7,7 +7,7 @@ npm run build:app
 - problems:
 
   1. cannot make it served on subdirectory (manifest will returned as index.html?) but can on root /
-  2. solved by serving by fastify server. But another problem in src/plugins/editor-monaco/after-load.js
+  2. solved by serving by fastify server. But another problem in src/plugins/editor-monaco/after-load.js is:
 
 ```
 baseUrl: document.baseURI || location.href
