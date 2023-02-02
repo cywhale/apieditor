@@ -25,7 +25,7 @@ const makeAfterLoad =
       baseUrl: document.baseURI || location.href, // eslint-disable-line no-restricted-globals
       getWorkerUrl(moduleId, label) {
 	// test
-	console.log(`baseUrl:${document.baseURI} as: ${new URL('./static/js/apidom.worker.js', document.baseURI).toString()}`);
+	// console.log(`baseUrl:${document.baseURI} as: ${new URL('./static/js/apidom.worker.js', document.baseURI).toString()}`);
         if (label === languageId) {
           return new URL('./static/js/apidom.worker.js', document.baseURI).toString(); // this.baseUrl
         }

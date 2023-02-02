@@ -66,7 +66,6 @@ test/cypress/downloads
 **/*.pem
 **/*.key
 **/*.cert
-**/.env
 **/.cache
 **/.*.login.*
 **/.setting.*
