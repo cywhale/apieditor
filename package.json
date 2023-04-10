@@ -120,7 +120,7 @@
     "husky": "^8.0.3",
     "jest-canvas-mock": "^2.4.0",
     "lint-staged": "^13.1.0",
-    "prettier": "^2.8.4",
+    "prettier": "^2.8.7",
     "react-scripts": "file:./create-react-app/packages/react-scripts",
     "rimraf": "^4.4.1",
     "sass": "^1.58.0",
